@@ -1,0 +1,13 @@
+bcrypt
+fastapi
+geopy
+packaging==24.2
+passlib
+psycopg2-binary
+pydantic
+python-dotenv
+python-jose
+python-multipart
+requests
+SQLAlchemy
+uvicorn
