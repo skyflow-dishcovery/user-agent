@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Form
 from pydantic import BaseModel
 from auth.deps import get_current_user
-from agents.input_agent.utils import llama_query
+from agents_project.input_agent.utils import llama_query
 from utils.history import fetch_user_history
 from utils.db_store import update_user_history
 
@@ -27,8 +27,9 @@ User history: "{history}"
 Based on this, is the user asking about:
 1. Food ordering (Dishcovery)
 2. Travel booking (SkyFlow)
+3. Hotel booking (hotel)
 
-Respond with only "dishcovery" or "skyflow".
+Respond with only "dishcovery" or "skyflow" or "hotel".
 """
         intent = llama_query(prompt).strip().lower()
 

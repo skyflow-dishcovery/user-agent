@@ -9,10 +9,10 @@ async def handle_voice_input(file: UploadFile = File(...), current_user: str = D
     try:
         contents = await file.read()
 
-        with open("./agents/input_agent/temp_audio.wav", "wb") as f:
+        with open("./agents_project/input_agent/temp_audio.wav", "wb") as f:
             f.write(contents)
 
-        english_text = translate_audio("./agents/input_agent/temp_audio.wav")
+        english_text = translate_audio("./agents_project/input_agent/temp_audio.wav")
         return {
             "user_id": current_user["id"],
             "text": english_text,

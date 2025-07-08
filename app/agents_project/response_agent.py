@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Form, Depends
 from auth.deps import get_current_user
-from agents.input_agent.utils import llama_query
+from agents_project.input_agent.utils import llama_query
 from utils.history import fetch_user_history
 from utils.db_store import update_user_history
 from utils.location import get_location_from_coords
