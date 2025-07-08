@@ -13,3 +13,4 @@ SQLAlchemy
 uvicorn
 openai-agents
 pydantic[email]
+httpx
