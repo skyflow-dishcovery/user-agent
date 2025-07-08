@@ -2,6 +2,7 @@ from fastapi import APIRouter, UploadFile, File, Form, Depends, Request
 import requests
 from auth.deps import get_current_user
 import httpx
+from utils.db_store import update_user_history
 
 
 router = APIRouter(prefix="/agent", tags=["Multi-Agent Flow"])
@@ -17,9 +18,13 @@ async def full_agent_flow(request: Request, file: UploadFile = File(None), text:
         async with httpx.AsyncClient() as client:
             # -------- Step 1: Input Agent --------
             if file:
+                files = {
+                    "file": (file.filename, await file.read(), file.content_type)
+                }
+
                 input_resp = await client.post(
                     f"{BASE_URL}/agent/voice",
-                    files=file,
+                    files=files,
                     headers=headers
                 )
 
@@ -73,6 +78,8 @@ async def full_agent_flow(request: Request, file: UploadFile = File(None), text:
                 return {"status": "failed", "error": "Unknown intent."}
 
         service_data = service_resp.json()
+
+        update_user_history(user_id, f"{intent.upper()} AGENT: {service_data}")
 
         return {
             "status": "success",

@@ -8,12 +8,26 @@ from agents_project.skyflow_agent.api import router as skyflow_agent_router
 from agents_project.restaurant_agent.api import router as restaurant_agent_router
 from agents_project.hotel_agent.api import router as hotel_agent_router
 from agents_project.multi_agent_router import router as multi_agent_router
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 # Create tables
 Base.metadata.create_all(bind=engine)
+
+origins = [
+    "http://localhost:5173",   # Vite default dev server
+    "http://127.0.0.1:5173",   # Some browsers may use this
+    # You can add more frontend URLs here
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,            # allow all origins with ["*"] in dev
+    allow_credentials=True,
+    allow_methods=["*"],              # allow all HTTP methods (GET, POST, etc)
+    allow_headers=["*"],              # allow all headers (especially for auth)
+)
 
 # Routes
 app.include_router(auth_router)
